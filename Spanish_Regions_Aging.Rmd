@@ -1,0 +1,17 @@
+---
+title: "Spanish Regions and Aging"
+author: "Aitor Alexander Gutierrez Valero"
+date: '2022-08-01'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Importing Data of Spanish Regions w.r.t. Age and Other Demographics
+
+```{r import, echo=FALSE}
+
+```
+
