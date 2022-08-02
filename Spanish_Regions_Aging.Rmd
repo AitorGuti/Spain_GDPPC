@@ -11,7 +11,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Importing Data of Spanish Regions w.r.t. Age and Other Demographics
 
-```{r import, echo=FALSE}
+```{r 2000_GDP_per_capita, echo=FALSE}
+
+```
+
+```{r 2019_GDPpc, echo=FALSE}
+
+```
+
+```{r 2000_2019_GDPpc_%_Change, echo=FALSE}
+
+```
+
+```{r 2000_2019_GDPpc_Absolute_Change, echo=FALSE}
 
 ```
 
