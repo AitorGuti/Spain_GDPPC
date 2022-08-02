@@ -13,25 +13,26 @@ library(dplyr)
 library(ggplot2)
 ```
 
-### Importing Data of Spanish Regions w.r.t. Age and Other Demographics
+### GDP per capita of Spanish Regions in the year 2000 and 2019
+#### From the Instituto National de Estadística. Euros Inflation Adjusted to 2019
 
-```{r 2000_GDP_per_capita, echo=FALSE}
+```{r GDPpc_Spain, echo = FALSE, show_col_types = FALSE}
 GDPpc_Spanish_Regions_2000_2019 <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv")
-head(GDP_Per_Capita_Spanish_Regions_2000_2019)
+head(GDPpc_Spanish_Regions_2000_2019)
 ```
-```{r 2000_GDPpc, echo=FALSE}
-
-```
-
-```{r 2019_GDPpc, echo=FALSE}
+```{r 2000_GDPpc}
 
 ```
 
-```{r 2000_2019_GDPpc_%_Change, echo=FALSE}
+```{r 2019_GDPpc,}
 
 ```
 
-```{r 2000_2019_GDPpc_Absolute_Change, echo=FALSE}
+```{r 2000_2019_GDPpc_%_Change}
+
+```
+
+```{r 2000_2019_GDPpc_Absolute_Change}
 
 ```
 
