@@ -7,11 +7,19 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(readr)
+library(dplyr)
+library(ggplot2)
 ```
 
 ### Importing Data of Spanish Regions w.r.t. Age and Other Demographics
 
 ```{r 2000_GDP_per_capita, echo=FALSE}
+GDPpc_Spanish_Regions_2000_2019 <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv")
+head(GDP_Per_Capita_Spanish_Regions_2000_2019)
+```
+```{r 2000_GDPpc, echo=FALSE}
 
 ```
 
