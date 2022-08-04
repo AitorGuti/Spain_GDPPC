@@ -16,21 +16,24 @@ library(mapSpain)
 ```
 ### GDP per capita of Spanish Regions in the year 2000 and 2019
 #### From the Instituto National de Estadística and the Instituto Geográfico Nacional. Euros Inflation Adjusted to 2019
-##### First, I imported data relating to Spain's GDP per capita in 2000 and 2019, and from the "mapSpain" package I imported "pobmun19" which is a df  including Spain's 2019 census. Next, I cleaned up the GDP df in order to merge it with the census df.
+<br>
+First, I imported data relating to Spain's GDP per capita in 2000 and 2019, and from the "mapSpain" package I imported "pobmun19" which is a df  including Spain's 2019 census. Next, I cleaned up the GDP df in order to merge it with the census df.
 
 ```{r GDPpc_Spain, echo = FALSE, show_col_types = FALSE}
 GDPpc_spain <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv",) #Import Spanish Provinces Data
 GDPpc_spain["Province"][GDPpc_spain["Province"] == "Álava"] <- "Araba/Álava" #IF ALAVA, CHANGE TO ARABA/ALAVA
 names(GDPpc_spain)[1]<-paste("provincia")
-head(GDPpc_spain)
 
 census <- mapSpain::pobmun19
-head(census)
 
 census_gdp <- merge(census,GDPpc_spain,by="provincia")
-head(census_gdp)
 
-codelist <- mapSpain::esp_codelist
+codelist <- mapSpain::esp_codelist # Names and codes of all provinces, autonomous territories, and cities.
+
+census_gdp_coded <- unique(merge(census_gdp, codelist[, c("cpro", "codauto")], all.x = TRUE))
+head(census_gdp_coded)
+
+
 ```
 
 ```{r Testing, echo=FALSE}
