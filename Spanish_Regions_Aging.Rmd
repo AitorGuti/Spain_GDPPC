@@ -1,5 +1,5 @@
 ---
-title: "Spanish Regions and Aging"
+title: "Spanish Regions and Aging in R"
 author: "Aitor Alexander Gutierrez Valero"
 date: '2022-08-01'
 output: html_document
@@ -11,15 +11,52 @@ library(knitr)
 library(readr)
 library(dplyr)
 library(ggplot2)
+library(leaflet)
+#library(mapSpain)
 ```
-
 ### GDP per capita of Spanish Regions in the year 2000 and 2019
-#### From the Instituto National de Estadística. Euros Inflation Adjusted to 2019
+#### From the Instituto National de Estadística and the Instituto Geográfico Nacional. Euros Inflation Adjusted to 2019
 
 ```{r GDPpc_Spain, echo = FALSE, show_col_types = FALSE}
-GDPpc_Spanish_Regions_2000_2019 <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv")
-head(GDPpc_Spanish_Regions_2000_2019)
+GDPpc_Spanish_Provinces_2000_2019 <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv") #Import Spanish Provinces Data
+head(GDPpc_Spanish_Provinces_2000_2019)
 ```
+```{r Testing}
+# Spain <- GENERATES A GREY MAP OF SPAIN WITH SURROUNDING COUNTRIES
+# leaflet() %>%
+# setView(
+# lat = 39.6566,
+# lng = -3.7038400,
+# zoom = 5.5
+# ) %>%
+# addProviderEspTiles(provider = "IGNBase.Gris")
+# #addProviderEspTiles(provider = "RedTransporte.Carreteras")
+# Spain
+
+# census19 <- mapSpain::pobmun19
+# 
+# # Extract CCAA from base dataset
+# 
+# codelist <- mapSpain::esp_codelist
+# 
+# census19 <-
+#   unique(merge(census19, codelist[, c("cpro", "codauto")], all.x = TRUE))
+# 
+# # Summarize by CCAA
+# census19_ccaa <-
+#   aggregate(cbind(pob19, men, women) ~ codauto, data = census, sum)
+# 
+# census19_ccaa$porc_women <- census19_ccaa$women / census19_ccaa$pob19
+# census19_ccaa$porc_women_lab <-
+#   paste0(round(100 * census19_ccaa$porc_women, 2), "%")
+# 
+# # Merge into spatial data
+# 
+# CCAA_sf <- esp_get_ccaa()
+# CCAA_sf <- merge(CCAA_sf, census19_ccaa)
+# Can <- esp_get_can_box()
+```
+
 ```{r 2000_GDPpc}
 
 ```

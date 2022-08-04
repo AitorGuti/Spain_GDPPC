@@ -13,7 +13,7 @@
 
 <meta name="date" content="2022-08-01" />
 
-<title>Spanish Regions and Aging</title>
+<title>Spanish Regions and Aging in R</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -363,7 +363,7 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Spanish Regions and Aging</h1>
+<h1 class="title toc-ignore">Spanish Regions and Aging in R</h1>
 <h4 class="author">Aitor Alexander Gutierrez Valero</h4>
 <h4 class="date">2022-08-01</h4>
 
@@ -372,9 +372,9 @@ pre code {
 
 <div id="gdp-per-capita-of-spanish-regions-in-the-year-2000-and-2019" class="section level3">
 <h3>GDP per capita of Spanish Regions in the year 2000 and 2019</h3>
-<div id="from-the-instituto-national-de-estadística.-euros-inflation-adjusted-to-2019" class="section level4">
-<h4>From the Instituto National de Estadística. Euros Inflation Adjusted
-to 2019</h4>
+<div id="from-the-instituto-national-de-estadística-and-the-instituto-geográfico-nacional.-euros-inflation-adjusted-to-2019" class="section level4">
+<h4>From the Instituto National de Estadística and the Instituto
+Geográfico Nacional. Euros Inflation Adjusted to 2019</h4>
 <pre><code>## Rows: 52 Columns: 3
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -391,6 +391,39 @@ to 2019</h4>
 ## 4 Granada   10600  18887
 ## 5 Huelva    12974  20319
 ## 6 Jaén      10397  17997</code></pre>
+<pre class="r"><code># Spain &lt;- GENERATES A GREY MAP OF SPAIN WITH SURROUNDING COUNTRIES
+# leaflet() %&gt;%
+# setView(
+# lat = 39.6566,
+# lng = -3.7038400,
+# zoom = 5.5
+# ) %&gt;%
+# addProviderEspTiles(provider = &quot;IGNBase.Gris&quot;)
+# #addProviderEspTiles(provider = &quot;RedTransporte.Carreteras&quot;)
+# Spain
+
+# census19 &lt;- mapSpain::pobmun19
+# 
+# # Extract CCAA from base dataset
+# 
+# codelist &lt;- mapSpain::esp_codelist
+# 
+# census19 &lt;-
+#   unique(merge(census19, codelist[, c(&quot;cpro&quot;, &quot;codauto&quot;)], all.x = TRUE))
+# 
+# # Summarize by CCAA
+# census19_ccaa &lt;-
+#   aggregate(cbind(pob19, men, women) ~ codauto, data = census, sum)
+# 
+# census19_ccaa$porc_women &lt;- census19_ccaa$women / census19_ccaa$pob19
+# census19_ccaa$porc_women_lab &lt;-
+#   paste0(round(100 * census19_ccaa$porc_women, 2), &quot;%&quot;)
+# 
+# # Merge into spatial data
+# 
+# CCAA_sf &lt;- esp_get_ccaa()
+# CCAA_sf &lt;- merge(CCAA_sf, census19_ccaa)
+# Can &lt;- esp_get_can_box()</code></pre>
 </div>
 </div>
 
