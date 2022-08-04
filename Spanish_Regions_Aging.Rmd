@@ -12,16 +12,23 @@ library(readr)
 library(dplyr)
 library(ggplot2)
 library(leaflet)
-#library(mapSpain)
+library(mapSpain)
 ```
 ### GDP per capita of Spanish Regions in the year 2000 and 2019
 #### From the Instituto National de Estadística and the Instituto Geográfico Nacional. Euros Inflation Adjusted to 2019
 
 ```{r GDPpc_Spain, echo = FALSE, show_col_types = FALSE}
-GDPpc_Spanish_Provinces_2000_2019 <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv") #Import Spanish Provinces Data
-head(GDPpc_Spanish_Provinces_2000_2019)
+GDPpc_Spain_2000_2019 <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv",) #Import Spanish Provinces Data
+head(GDPpc_Spain_2000_2019)
+
+census <- mapSpain::pobmun19
+head(census)
+
+codelist <- mapSpain::esp_codelist
+head(codelist)
 ```
-```{r Testing}
+
+```{r Testing, echo=FALSE}
 # Spain <- GENERATES A GREY MAP OF SPAIN WITH SURROUNDING COUNTRIES
 # leaflet() %>%
 # setView(
@@ -33,28 +40,52 @@ head(GDPpc_Spanish_Provinces_2000_2019)
 # #addProviderEspTiles(provider = "RedTransporte.Carreteras")
 # Spain
 
-# census19 <- mapSpain::pobmun19
+# census <- mapSpain::pobmun19
 # 
 # # Extract CCAA from base dataset
 # 
 # codelist <- mapSpain::esp_codelist
 # 
-# census19 <-
-#   unique(merge(census19, codelist[, c("cpro", "codauto")], all.x = TRUE))
+# census <-
+#   unique(merge(census, codelist[, c("cpro", "codauto")], all.x = TRUE))
+# census
 # 
 # # Summarize by CCAA
-# census19_ccaa <-
+# census_ccaa <-
 #   aggregate(cbind(pob19, men, women) ~ codauto, data = census, sum)
 # 
-# census19_ccaa$porc_women <- census19_ccaa$women / census19_ccaa$pob19
-# census19_ccaa$porc_women_lab <-
-#   paste0(round(100 * census19_ccaa$porc_women, 2), "%")
+# census_ccaa$porc_women <- census_ccaa$women / census_ccaa$pob19
+# census_ccaa$porc_women_lab <-
+#   paste0(round(100 * census_ccaa$porc_women, 2), "%")
+# census_ccaa
 # 
 # # Merge into spatial data
 # 
 # CCAA_sf <- esp_get_ccaa()
-# CCAA_sf <- merge(CCAA_sf, census19_ccaa)
+# CCAA_sf <- merge(CCAA_sf, census_ccaa)
 # Can <- esp_get_can_box()
+# 
+# ggplot(CCAA_sf) +
+#   geom_sf(aes(fill = porc_women),
+#     color = "grey70",
+#     lwd = .3
+#   ) +
+#   geom_sf(data = Can, color = "grey70") +
+#   geom_sf_label(aes(label = porc_women_lab),
+#     fill = "white", alpha = 0.5,
+#     size = 3,
+#     label.size = 0
+#   ) +
+#   scale_fill_gradientn(
+#     colors = hcl.colors(10, "Blues", rev = TRUE),
+#     n.breaks = 10,
+#     labels = function(x) {
+#       sprintf("%1.1f%%", 100 * x)
+#     },
+#     guide = guide_legend(title = "Porc. women")
+#   ) +
+#   theme_void() +
+#   theme(legend.position = c(0.1, 0.6))
 ```
 
 ```{r 2000_GDPpc}

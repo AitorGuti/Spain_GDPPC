@@ -391,39 +391,90 @@ Geográfico Nacional. Euros Inflation Adjusted to 2019</h4>
 ## 4 Granada   10600  18887
 ## 5 Huelva    12974  20319
 ## 6 Jaén      10397  17997</code></pre>
-<pre class="r"><code># Spain &lt;- GENERATES A GREY MAP OF SPAIN WITH SURROUNDING COUNTRIES
-# leaflet() %&gt;%
-# setView(
-# lat = 39.6566,
-# lng = -3.7038400,
-# zoom = 5.5
-# ) %&gt;%
-# addProviderEspTiles(provider = &quot;IGNBase.Gris&quot;)
-# #addProviderEspTiles(provider = &quot;RedTransporte.Carreteras&quot;)
-# Spain
-
-# census19 &lt;- mapSpain::pobmun19
-# 
-# # Extract CCAA from base dataset
-# 
-# codelist &lt;- mapSpain::esp_codelist
-# 
-# census19 &lt;-
-#   unique(merge(census19, codelist[, c(&quot;cpro&quot;, &quot;codauto&quot;)], all.x = TRUE))
-# 
-# # Summarize by CCAA
-# census19_ccaa &lt;-
-#   aggregate(cbind(pob19, men, women) ~ codauto, data = census, sum)
-# 
-# census19_ccaa$porc_women &lt;- census19_ccaa$women / census19_ccaa$pob19
-# census19_ccaa$porc_women_lab &lt;-
-#   paste0(round(100 * census19_ccaa$porc_women, 2), &quot;%&quot;)
-# 
-# # Merge into spatial data
-# 
-# CCAA_sf &lt;- esp_get_ccaa()
-# CCAA_sf &lt;- merge(CCAA_sf, census19_ccaa)
-# Can &lt;- esp_get_can_box()</code></pre>
+<pre><code>##   cpro provincia cmun      name  pob19   men women
+## 1   02  Albacete  001 Abengibre    790   379   411
+## 2   02  Albacete  002    Alatoz    519   291   228
+## 3   02  Albacete  003  Albacete 173329 84687 88642
+## 4   02  Albacete  004  Albatana    692   356   336
+## 5   02  Albacete  005   Alborea    658   337   321
+## 6   02  Albacete  006  Alcadozo    654   363   291</code></pre>
+<pre><code>##   nuts1.code nuts1.name nuts1.name.alt nuts1.shortname.es codauto
+## 1        ES1   NOROESTE       Noroeste           Noroeste      03
+## 2        ES1   NOROESTE       Noroeste           Noroeste      06
+## 3        ES1   NOROESTE       Noroeste           Noroeste      12
+## 4        ES1   NOROESTE       Noroeste           Noroeste      12
+## 5        ES1   NOROESTE       Noroeste           Noroeste      12
+## 6        ES1   NOROESTE       Noroeste           Noroeste      12
+##   iso2.ccaa.code nuts2.code           ine.ccaa.name       iso2.ccaa.name.es
+## 1          ES-AS       ES12 Asturias, Principado de Asturias, Principado de
+## 2          ES-CB       ES13               Cantabria               Cantabria
+## 3          ES-GA       ES11                 Galicia                 Galicia
+## 4          ES-GA       ES11                 Galicia                 Galicia
+## 5          ES-GA       ES11                 Galicia                 Galicia
+## 6          ES-GA       ES11                 Galicia                 Galicia
+##   iso2.ccaa.name.ca iso2.ccaa.name.gl iso2.ccaa.name.eu             nuts2.name
+## 1              &lt;NA&gt;              &lt;NA&gt;              &lt;NA&gt; Principado de Asturias
+## 2              &lt;NA&gt;              &lt;NA&gt;              &lt;NA&gt;              Cantabria
+## 3              &lt;NA&gt;           Galicia              &lt;NA&gt;                Galicia
+## 4              &lt;NA&gt;           Galicia              &lt;NA&gt;                Galicia
+## 5              &lt;NA&gt;           Galicia              &lt;NA&gt;                Galicia
+## 6              &lt;NA&gt;           Galicia              &lt;NA&gt;                Galicia
+##   cldr.ccaa.name.en      cldr.ccaa.name.es cldr.ccaa.name.ca
+## 1          Asturias Principado de Asturias          Astúries
+## 2         Cantabria              Cantabria         Cantàbria
+## 3           Galicia                Galicia           Galícia
+## 4           Galicia                Galicia           Galícia
+## 5           Galicia                Galicia           Galícia
+## 6           Galicia                Galicia           Galícia
+##        cldr.ccaa.name.ga      cldr.ccaa.name.eu ccaa.shortname.en
+## 1 Principado de Asturias Asturiesko Printzerria          Asturias
+## 2              Cantabria              Kantabria         Cantabria
+## 3                Galicia                Galizia           Galicia
+## 4                Galicia                Galizia           Galicia
+## 5                Galicia                Galizia           Galicia
+## 6                Galicia                Galizia           Galicia
+##   ccaa.shortname.es ccaa.shortname.ca ccaa.shortname.ga ccaa.shortname.eu cpro
+## 1          Asturias          Astúries          Asturias          Asturias   33
+## 2         Cantabria         Cantàbria         Cantabria         Kantabria   39
+## 3           Galicia           Galícia           Galicia           Galizia   15
+## 4           Galicia           Galícia           Galicia           Galizia   27
+## 5           Galicia           Galícia           Galicia           Galizia   32
+## 6           Galicia           Galícia           Galicia           Galizia   36
+##   iso2.prov.code nuts.prov.code ine.prov.name iso2.prov.name.es
+## 1           ES-O          ES120      Asturias          Asturias
+## 2           ES-S          ES130     Cantabria         Cantabria
+## 3           ES-C          ES111     Coruña, A         La Coruña
+## 4          ES-LU          ES112          Lugo              Lugo
+## 5          ES-OR          ES113       Ourense            Orense
+## 6          ES-PO          ES114    Pontevedra        Pontevedra
+##   iso2.prov.name.ca iso2.prov.name.ga iso2.prov.name.eu cldr.prov.name.en
+## 1              &lt;NA&gt;              &lt;NA&gt;              &lt;NA&gt;          Asturias
+## 2              &lt;NA&gt;              &lt;NA&gt;              &lt;NA&gt;         Cantabria
+## 3              &lt;NA&gt;          A Coruña              &lt;NA&gt;          A Coruña
+## 4              &lt;NA&gt;              Lugo              &lt;NA&gt;              Lugo
+## 5              &lt;NA&gt;           Ourense              &lt;NA&gt;           Ourense
+## 6              &lt;NA&gt;        Pontevedra              &lt;NA&gt;        Pontevedra
+##         cldr.prov.name.es       cldr.prov.name.ca       cldr.prov.name.ga
+## 1  Principado de Asturias                Astúries  Principado de Asturias
+## 2               Cantabria               Cantàbria               Cantabria
+## 3  Provincia de La Coruña Província de la Corunya     Provincia da Coruña
+## 4       Provincia de Lugo       Província de Lugo       Provincia de Lugo
+## 5     Provincia de Orense     Província d’Ourense    Provincia de Ourense
+## 6 Provincia de Pontevedra Província de Pontevedra Provincia de Pontevedra
+##         cldr.prov.name.eu prov.shortname.en prov.shortname.es prov.shortname.ca
+## 1  Asturiesko Printzerria          Asturias          Asturias          Astúries
+## 2               Kantabria         Cantabria         Cantabria         Cantàbria
+## 3     Coruñako probintzia          A Coruña         La Coruña        La Corunya
+## 4       Lugoko probintzia              Lugo              Lugo              Lugo
+## 5    Ourenseko probintzia           Ourense            Orense           Ourense
+## 6 Pontevedrako probintzia        Pontevedra        Pontevedra        Pontevedra
+##   prov.shortname.ga prov.shortname.eu nuts3.code nuts3.name nuts3.shortname.es
+## 1          Asturias          Asturias      ES120   Asturias           Asturias
+## 2         Cantabria         Kantabria      ES130  Cantabria          Cantabria
+## 3          A Coruña            Coruña      ES111   A Coruña          La Coruña
+## 4              Lugo              Lugo      ES112       Lugo               Lugo
+## 5           Ourense           Ourense      ES113    Ourense             Orense
+## 6        Pontevedra        Pontevedra      ES114 Pontevedra         Pontevedra</code></pre>
 </div>
 </div>
 
