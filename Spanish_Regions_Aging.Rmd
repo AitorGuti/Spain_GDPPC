@@ -31,8 +31,38 @@ census_gdp <- merge(census,GDPpc_spain,by="provincia")
 codelist <- mapSpain::esp_codelist # Names and codes of all provinces, autonomous territories, and cities.
 
 census_gdp_coded <- unique(merge(census_gdp, codelist[, c("cpro", "codauto")], all.x = TRUE))
-head(census_gdp_coded)
 
+
+census_gdp_province <- census_gdp_coded %>%
+  distinct(provincia, .keep_all = TRUE) %>% #Choose unique instance of provincia
+  select("cpro", "provincia", "2000", "2019", "codauto") #Keep useful columns
+
+
+spain_gdp_sf <- esp_get_ccaa()
+spain_gdp_sf <- merge(spain_gdp_sf, census_gdp_province)
+Can <- esp_get_can_box()
+
+ggplot(spain_gdp_sf) +
+  geom_sf(aes(fill = 2000),
+    color = "grey70",
+    lwd = .3
+  ) +
+  geom_sf(data = Can, color = "grey70") +
+  geom_sf_label(aes(label = provincia),
+    fill = "white", alpha = 0.5,
+    size = 3,
+    label.size = 0
+  ) +
+  scale_fill_gradientn(
+    colors = hcl.colors(10, "Blues", rev = TRUE),
+    n.breaks = 10,
+    labels = function(x) {
+      sprintf("%1.1f%%", 100 * x)
+    },
+    guide = guide_legend(title = "GDP Euros")
+  ) +
+  theme_void() +
+  theme(legend.position = c(0.1, 0.6))
 
 ```
 
