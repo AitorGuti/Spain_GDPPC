@@ -21,49 +21,40 @@ First, I imported data relating to Spain's GDP per capita in 2000 and 2019, and 
 
 ```{r GDPpc_Spain, echo = FALSE, show_col_types = FALSE}
 GDPpc_spain <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv",) #Import Spanish Provinces Data
-GDPpc_spain["Province"][GDPpc_spain["Province"] == "Álava"] <- "Araba/Álava" #IF ALAVA, CHANGE TO ARABA/ALAVA
-names(GDPpc_spain)[1]<-paste("provincia")
-
+names(GDPpc_spain)[1]<-paste("provincia") # Change Province to provincia
 census <- mapSpain::pobmun19
+
+census["provincia"][census["provincia"] == "Araba/Álava"] <- "Álava" # Change alava
+census["provincia"][census["provincia"] == "Balears, Illes"] <- "Islas Baleraes" # Change islas baleares
+census["provincia"][census["provincia"] == "Rioja, La"] <- "La Rioja" #Change La Rioja
+
+census["provincia"][census["provincia"] == "Alicante/Alacant"] <- "Alicante" #Change Alicante for both
+GDPpc_spain["provincia"][GDPpc_spain["provincia"] == "Alicante/Alacant"] <- "Alicante" 
+
+census["provincia"][census["provincia"] == "Castellón/Castelló"] <- "Castellón" #Change Castellón for both
+GDPpc_spain["provincia"][GDPpc_spain["provincia"] == "Castellón/Castelló"] <- "Castellón" 
+
+census["provincia"][census["provincia"] == "Valencia/València"] <- "Valencia" #Change Valencia for both
+GDPpc_spain["provincia"][GDPpc_spain["provincia"] == "Valencia/València"] <- "Valencia" 
 
 census_gdp <- merge(census,GDPpc_spain,by="provincia")
 
 codelist <- mapSpain::esp_codelist # Names and codes of all provinces, autonomous territories, and cities.
 
 census_gdp_coded <- unique(merge(census_gdp, codelist[, c("cpro", "codauto")], all.x = TRUE))
-
+names(census_gdp_coded)[8] <- "x2000"
+names(census_gdp_coded)[9] <- "x2019"
 
 census_gdp_province <- census_gdp_coded %>%
   distinct(provincia, .keep_all = TRUE) %>% #Choose unique instance of provincia
-  select("cpro", "provincia", "2000", "2019", "codauto") #Keep useful columns
+  select("cpro", "provincia", "x2000", "x2019", "codauto") #Keep useful columns
 
 
-spain_gdp_sf <- esp_get_ccaa()
+spain_gdp_sf <- esp_get_prov()
 spain_gdp_sf <- merge(spain_gdp_sf, census_gdp_province)
+
 Can <- esp_get_can_box()
-
-ggplot(spain_gdp_sf) +
-  geom_sf(aes(fill = 2000),
-    color = "grey70",
-    lwd = .3
-  ) +
-  geom_sf(data = Can, color = "grey70") +
-  geom_sf_label(aes(label = provincia),
-    fill = "white", alpha = 0.5,
-    size = 3,
-    label.size = 0
-  ) +
-  scale_fill_gradientn(
-    colors = hcl.colors(10, "Blues", rev = TRUE),
-    n.breaks = 10,
-    labels = function(x) {
-      sprintf("%1.1f%%", 100 * x)
-    },
-    guide = guide_legend(title = "GDP Euros")
-  ) +
-  theme_void() +
-  theme(legend.position = c(0.1, 0.6))
-
+Can
 ```
 
 ```{r Testing, echo=FALSE}
@@ -127,7 +118,24 @@ ggplot(spain_gdp_sf) +
 ```
 
 ```{r 2000_GDPpc}
-
+ggplot(spain_gdp_sf) +
+  geom_sf(aes(fill = x2000),
+    color = "grey80",
+    lwd = .3
+  ) +
+  geom_sf(data = Can, color = "grey70") +
+  geom_sf_label(aes(label = provincia),
+    fill = "white", alpha = 0,
+    size = 2,
+    label.size = 0
+  ) +
+  scale_fill_gradientn(
+    colors = hcl.colors(10, "Blues", rev = TRUE),
+    n.breaks = 10,
+    guide = guide_legend(title = "GDP per capita / €")
+  ) +
+  theme_void() +
+  theme(legend.position = c(0.1, 0.6))
 ```
 
 ```{r 2019_GDPpc,}
