@@ -38,6 +38,7 @@ census["provincia"][census["provincia"] == "Valencia/València"] <- "Valencia" #
 GDPpc_spain["provincia"][GDPpc_spain["provincia"] == "Valencia/València"] <- "Valencia" 
 
 census_gdp <- merge(census,GDPpc_spain,by="provincia")
+census_gdp["provincia"][census_gdp["provincia"] == "Palmas, Las"] <- "Las Palmas" #Change Las Palmas
 
 codelist <- mapSpain::esp_codelist # Names and codes of all provinces, autonomous territories, and cities.
 
@@ -133,7 +134,7 @@ ggplot(spain_gdp_sf) +
     colors = hcl.colors(10, "Cividis", rev = TRUE),
     n.breaks = 10,
     limits = c(10000, 37000),
-    guide = guide_legend(title = "GDP per capita / €")
+    guide = guide_legend(title = "GDPPC / €")
   ) +
   theme_void() +
   theme(legend.position = c(0.1, 0.6))
@@ -156,18 +157,57 @@ ggplot(spain_gdp_sf) +
     colors = hcl.colors(10, "Cividis", rev = TRUE),
     n.breaks = 10,
     limits = c(10000, 37000),
-    guide = guide_legend(title = "GDP per capita / €")
+    guide = guide_legend(title = "GDPPC / €")
   ) +
   theme_void() +
   theme(legend.position = c(0.1, 0.6))
 ```
 
 ```{r 2000_2019_GDPpc_Absolute_Change}
+spain_gdp_sf <- spain_gdp_sf %>% #Create Absolute and Percent Columns
+  mutate(Absolute = x2019-x2000,
+         Percent = (x2019-x2000)/x2000*100)
 
-
+ggplot(spain_gdp_sf) +
+  geom_sf(aes(fill = Absolute),
+    color = "grey50",
+    lwd = .05
+  ) +
+  geom_sf(data = Can, color = "grey40") +
+  geom_sf_label(aes(label = provincia),
+    fill = "white", alpha = 0,
+    size = 1.2,
+    label.size = 0,
+    colour = "black"
+  ) +
+  scale_fill_gradientn(
+    colors = hcl.colors(10, "Cividis", rev = TRUE),
+    n.breaks = 10,
+    guide = guide_legend(title = "Change in GDPPC / €")
+  ) +
+  theme_void() +
+  theme(legend.position = c(0.1, 0.6))
 ```
 
 ```{r 2000_2019_GDPpc_Percent_Change}
-
+ggplot(spain_gdp_sf) +
+  geom_sf(aes(fill = Percent),
+    color = "grey50",
+    lwd = .05
+  ) +
+  geom_sf(data = Can, color = "grey40") +
+  geom_sf_label(aes(label = provincia),
+    fill = "white", alpha = 0,
+    size = 1.2,
+    label.size = 0,
+    colour = "black"
+  ) +
+  scale_fill_gradientn(
+    colors = hcl.colors(10, "Cividis", rev = TRUE),
+    n.breaks = 10,
+    guide = guide_legend(title = "Change in GDPPC / %")
+  ) +
+  theme_void() +
+  theme(legend.position = c(0.1, 0.6))
 ```
 
