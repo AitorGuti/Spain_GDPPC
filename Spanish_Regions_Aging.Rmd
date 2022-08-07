@@ -137,7 +137,8 @@ ggplot(spain_gdp_sf) +
     guide = guide_legend(title = "GDPPC / €")
   ) +
   theme_void() +
-  theme(legend.position = c(0.1, 0.6))
+  theme(legend.position = c(0.1, 0.6)) +
+  ggtitle("Economic Growth of Spanish Provinces, 2000", subtitle = "Inflation Adjusted (2019 Euros)")
 ```
 
 ```{r 2019_GDPpc,}
@@ -160,7 +161,8 @@ ggplot(spain_gdp_sf) +
     guide = guide_legend(title = "GDPPC / €")
   ) +
   theme_void() +
-  theme(legend.position = c(0.1, 0.6))
+  theme(legend.position = c(0.1, 0.6)) +
+  ggtitle("Economic Production of Spanish Provinces, 2019", subtitle = "Inflation Adjusted (2019 Euros)")
 ```
 
 ```{r 2000_2019_GDPpc_Absolute_Change}
@@ -186,7 +188,8 @@ ggplot(spain_gdp_sf) +
     guide = guide_legend(title = "Change in GDPPC / €")
   ) +
   theme_void() +
-  theme(legend.position = c(0.1, 0.6))
+  theme(legend.position = c(0.1, 0.6)) +
+  ggtitle("Economic Growth of Spanish Provinces, 2000 to 2019", subtitle = "Inflation Adjusted (2019 Euros)")
 ```
 
 ```{r 2000_2019_GDPpc_Percent_Change}
@@ -208,6 +211,7 @@ ggplot(spain_gdp_sf) +
     guide = guide_legend(title = "Change in GDPPC / %")
   ) +
   theme_void() +
-  theme(legend.position = c(0.1, 0.6))
+  theme(legend.position = c(0.1, 0.6)) +
+  ggtitle("Economic Growth of Spanish Provinces, 2000 to 2019")
 ```
 
