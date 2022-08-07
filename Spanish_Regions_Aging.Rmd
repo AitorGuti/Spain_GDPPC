@@ -126,12 +126,13 @@ ggplot(spain_gdp_sf) +
   geom_sf(data = Can, color = "grey40") +
   geom_sf_label(aes(label = provincia),
     fill = "white", alpha = 0,
-    size = 2,
+    size = 1.2,
     label.size = 0
   ) +
   scale_fill_gradientn(
     colors = hcl.colors(10, "Cividis", rev = TRUE),
     n.breaks = 10,
+    limits = c(10000, 37000),
     guide = guide_legend(title = "GDP per capita / €")
   ) +
   theme_void() +
@@ -147,23 +148,26 @@ ggplot(spain_gdp_sf) +
   geom_sf(data = Can, color = "grey40") +
   geom_sf_label(aes(label = provincia),
     fill = "white", alpha = 0,
-    size = 2,
-    label.size = 0
+    size = 1.2,
+    label.size = 0,
+    colour = "black"
   ) +
   scale_fill_gradientn(
     colors = hcl.colors(10, "Cividis", rev = TRUE),
     n.breaks = 10,
+    limits = c(10000, 37000),
     guide = guide_legend(title = "GDP per capita / €")
   ) +
   theme_void() +
   theme(legend.position = c(0.1, 0.6))
 ```
 
-```{r 2000_2019_GDPpc_%_Change}
+```{r 2000_2019_GDPpc_Absolute_Change}
+
 
 ```
 
-```{r 2000_2019_GDPpc_Absolute_Change}
+```{r 2000_2019_GDPpc_Percent_Change}
 
 ```
 
