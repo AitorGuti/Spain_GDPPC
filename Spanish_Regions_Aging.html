@@ -13,7 +13,7 @@
 
 <meta name="date" content="2022-08-01" />
 
-<title>Spanish Regions and Aging in R</title>
+<title>Economic Performance of Spanish Provinces in R</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -363,7 +363,8 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Spanish Regions and Aging in R</h1>
+<h1 class="title toc-ignore">Economic Performance of Spanish Provinces
+in R</h1>
 <h4 class="author">Aitor Alexander Gutierrez Valero</h4>
 <h4 class="date">2022-08-01</h4>
 
@@ -372,13 +373,13 @@ pre code {
 
 <div id="gdp-per-capita-of-spanish-regions-in-the-year-2000-and-2019" class="section level3">
 <h3>GDP per capita of Spanish Regions in the year 2000 and 2019</h3>
-<div id="from-the-instituto-national-de-estadística-and-the-instituto-geográfico-nacional.-euros-inflation-adjusted-to-2019" class="section level4">
-<h4>From the Instituto National de Estadística and the Instituto
+<div id="from-the-instituto-nacional-de-estadística-and-the-instituto-geográfico-nacional.-euros-inflation-adjusted-to-2019" class="section level4">
+<h4>From the Instituto Nacional de Estadística and the Instituto
 Geográfico Nacional. Euros Inflation Adjusted to 2019</h4>
 <p><br> First, I imported data relating to Spain’s GDP per capita in
 2000 and 2019, and from the “mapSpain” package I imported “pobmun19”
-which is a df including Spain’s 2019 census. Next, I cleaned up the GDP
-df in order to merge it with the census df.</p>
+includes Spain’s 2019 census. Next, I cleaned up the GDP df in order to
+merge it with the census df.</p>
 <pre><code>## Rows: 52 Columns: 3
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
