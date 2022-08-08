@@ -20,7 +20,7 @@ library(mapSpain)
 First, I imported data relating to Spain's GDP per capita in 2000 and 2019, and from the "mapSpain" package I imported "pobmun19" includes Spain's 2019 census. Next, I cleaned up the GDP df in order to merge it with the census df.
 
 ```{r GDPpc_Spain, echo = FALSE, show_col_types = FALSE}
-GDPpc_spain <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv",) #Import Spanish Provinces Data
+GDPpc_spain <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv") #Import Spanish Provinces Data
 names(GDPpc_spain)[1]<-paste("provincia") # Change Province to provincia
 census <- mapSpain::pobmun19
 
