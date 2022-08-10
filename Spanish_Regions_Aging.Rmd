@@ -11,7 +11,6 @@ library(knitr)
 library(readr)
 library(dplyr)
 library(ggplot2)
-library(leaflet)
 library(mapSpain)
 ```
 ### GDP per capita of Spanish Regions in the year 2000 and 2019
@@ -43,20 +42,20 @@ census_gdp["provincia"][census_gdp["provincia"] == "Palmas, Las"] <- "Las Palmas
 codelist <- mapSpain::esp_codelist # Names and codes of all provinces, autonomous territories, and cities.
 
 census_gdp_coded <- unique(merge(census_gdp, codelist[, c("cpro", "codauto")], all.x = TRUE))
-names(census_gdp_coded)[8] <- "x2000"
-names(census_gdp_coded)[9] <- "x2019"
+names(census_gdp_coded)[8] <- "x2000" #Change 2000 to x2000 column name
+names(census_gdp_coded)[9] <- "x2019" #Change 2019 to x2019 column name
 
 census_gdp_province <- census_gdp_coded %>%
   distinct(provincia, .keep_all = TRUE) %>% #Choose unique instance of provincia
   select("cpro", "provincia", "x2000", "x2019", "codauto") #Keep useful columns
 
 
-spain_gdp_sf <- esp_get_prov()
-spain_gdp_sf <- merge(spain_gdp_sf, census_gdp_province)
+spain_sf <- esp_get_prov() # Province borders
+spain_gdp_sf <- merge(spain_sf, census_gdp_province)
 
-Can <- esp_get_can_box()
-Can
+Can <- esp_get_can_box() # Box in bottom left corner of map
 ```
+
 
 ```{r Testing, echo=FALSE}
 # Spain <- GENERATES A GREY MAP OF SPAIN WITH SURROUNDING COUNTRIES
@@ -138,7 +137,7 @@ ggplot(spain_gdp_sf) +
   ) +
   theme_void() +
   theme(legend.position = c(0.1, 0.6)) +
-  ggtitle("Economic Growth of Spanish Provinces, 2000", subtitle = "Inflation Adjusted (2019 Euros)")
+  ggtitle("Economic Growth of Spanish Provinces in 2000", subtitle = "Inflation Adjusted (2019 Euros)")
 ```
 
 ```{r 2019_GDPpc,}
@@ -162,7 +161,7 @@ ggplot(spain_gdp_sf) +
   ) +
   theme_void() +
   theme(legend.position = c(0.1, 0.6)) +
-  ggtitle("Economic Production of Spanish Provinces, 2019", subtitle = "Inflation Adjusted (2019 Euros)")
+  ggtitle("Economic Production of Spanish Provinces in 2019", subtitle = "Inflation Adjusted (2019 Euros)")
 ```
 
 ```{r 2000_2019_GDPpc_Absolute_Change}
