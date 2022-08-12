@@ -136,7 +136,7 @@ Provinces_2000 <-
   ) +
   theme_void() +
   theme(legend.position = c(0.1, 0.6)) +
-  ggtitle("Economic Growth of Spanish Provinces in 2000", subtitle = "Inflation Adjusted (2019 Euros)")
+  ggtitle("Economic Provinces of Spanish Provinces in 2000", subtitle = "Inflation Adjusted (2019 Euros)")
 Provinces_2000
 
 #ggsave("GDPPC_2000.png", dpi = 800)
