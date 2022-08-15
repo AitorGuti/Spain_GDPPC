@@ -8,10 +8,12 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(knitr)
-library(readr)
-library(dplyr)
-library(ggplot2)
+library(tidyverse)
 library(mapSpain)
+library(gganimate)
+library(transformr) # To Support the gganimate package
+library(gifski) # To Animate
+library(av) # Another Animation tool
 ```
 ### GDP per capita of Spanish Regions in the year 2000 and 2019
 #### From the Instituto Nacional de Estadística and the Instituto Geográfico Nacional. Euros Inflation Adjusted to 2019
@@ -226,5 +228,47 @@ Provinces_Percent_Change <-
 Provinces_Percent_Change
 
 ggsave("GDPPC_Percent_Change.png", dpi = 800)
+```
+
+```{r Animated_Transition_00_19}
+long_spain_gdp_sf <- # Making a "Year" column where each province has 2000 and 2019
+  spain_gdp_sf %>%
+  pivot_longer(
+    cols = starts_with("x"), 
+    names_to = "year",
+    names_prefix = "x",
+    names_transform = list(year = as.integer),
+    values_to = "GDPPC",
+  )
+
+Provinces_2000_2019 <-
+  ggplot(long_spain_gdp_sf) +
+  geom_sf(aes(fill = GDPPC),
+    color = "grey50",
+    lwd = .05
+  ) +
+  geom_sf(data = Can, color = "grey40") +
+  geom_sf_label(aes(label = provincia),
+    fill = "white", alpha = 0,
+    size = 1.2,
+    label.size = 0
+  ) +
+  scale_fill_gradientn(
+    colors = hcl.colors(10, "Cividis", rev = TRUE),
+    n.breaks = 10,
+    limits = c(10000, 37000),
+    guide = guide_legend(title = "GDPPC / €")
+  ) +
+  theme_void() +
+  theme(legend.position = c(0.1, 0.6)) +
+  ggtitle("Economic Production of Spanish Provinces Transition from 2000 to 2019", subtitle = "Inflation Adjusted (2019 Euros)") +
+  transition_states(year, wrap=FALSE)
+
+animate(
+  Provinces_2000_2019,
+  width = 2720, height = 1680, res=330,
+  renderer = gifski_renderer()
+)
+anim_save("Provinces_2000_2019_Transition.gif", animation = last_animation())
 ```
 
