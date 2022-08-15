@@ -271,3 +271,13 @@ animate(
 anim_save("Provinces_2000_2019_Transition.gif", animation = last_animation())
 ```
 
+```{r}
+simp_spain_gdp_sf <- spain_gdp_sf[,c(24:27)]
+
+simp_long_spain_gdp_sf <- long_spain_gdp_sf[,c(24:25, 28:29)]
+
+head(simp_spain_gdp_sf, 1)
+
+head(simp_long_spain_gdp_sf, 2)
+```
+
