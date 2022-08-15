@@ -136,10 +136,10 @@ Provinces_2000 <-
   ) +
   theme_void() +
   theme(legend.position = c(0.1, 0.6)) +
-  ggtitle("Economic Provinces of Spanish Provinces in 2000", subtitle = "Inflation Adjusted (2019 Euros)")
+  ggtitle("Economic Production of Spanish Provinces in 2000", subtitle = "Inflation Adjusted (2019 Euros)")
 Provinces_2000
 
-#ggsave("GDPPC_2000.png", dpi = 800)
+ggsave("GDPPC_2000.png", dpi = 800)
 ```
 
 ```{r 2019_GDPpc,}
@@ -167,7 +167,7 @@ Provinces_2019 <-
   ggtitle("Economic Production of Spanish Provinces in 2019", subtitle = "Inflation Adjusted (2019 Euros)")
 Provinces_2019
 
-#ggsave("GDPPC_2019.png", dpi = 800)
+ggsave("GDPPC_2019.png", dpi = 800)
 ```
 
 ```{r 2000_2019_GDPpc_Absolute_Change}
@@ -195,10 +195,10 @@ Provinces_Absolute_Change <-
   ) +
   theme_void() +
   theme(legend.position = c(0.1, 0.6)) +
-  ggtitle("Economic Growth of Spanish Provinces, 2000 to 2019", subtitle = "Inflation Adjusted (2019 Euros)")
+  ggtitle("Economic Growth of Spanish Provinces, 2000 to 2019, Absolute", subtitle = "Inflation Adjusted (2019 Euros)")
 Provinces_Absolute_Change
 
-#ggsave("GDPPC_Absolute_Change.png", dpi = 800)
+ggsave("GDPPC_Absolute_Change.png", dpi = 800)
 ```
 
 ```{r 2000_2019_GDPpc_Percent_Change}
@@ -222,7 +222,7 @@ Provinces_Percent_Change <-
   ) +
   theme_void() +
   theme(legend.position = c(0.1, 0.6)) +
-  ggtitle("Economic Growth of Spanish Provinces, 2000 to 2019")
+  ggtitle("Economic Growth of Spanish Provinces, 2000 to 2019, Relative")
 Provinces_Percent_Change
 
 ggsave("GDPPC_Percent_Change.png", dpi = 800)
