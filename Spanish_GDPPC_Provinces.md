@@ -1,43 +1,29 @@
----
-title: "Economic Performance of Spanish Provinces in R"
-author: "Aitor Alexander Gutierrez Valero"
-date: '2022-09-19'
-output:
-  md_document:
-    variant: gfm
-  # prettydoc::html_pretty:
-  #   theme: architect
-  #   highlight: github
----
-
-```{r setup, include=FALSE}
-library(knitr)
-library(tidyverse)
-library(mapSpain)
-library(gganimate)
-library(transformr) # To Support the gganimate package
-library(gifski) # To Animate
-knitr::opts_chunk$set(echo = TRUE)
-options(readr.show_col_types = FALSE)
-```
 # GDP per capita of Spanish Regions
 
-Data from the Instituto Nacional de Estadística and the Instituto Geográfico Nacional. Euros Inflation Adjusted to 2019
+Data from the Instituto Nacional de Estadística and the Instituto
+Geográfico Nacional. Euros Inflation Adjusted to 2019
 
----
+------------------------------------------------------------------------
 
 First, the 2000 and 2019 figures of GDP per capita are imported.
 
-```{r GDPpc_Spain_Import, warning=FALSE}
+``` r
 GDPpc_spain <- read_csv("GDP_Per_Capita_Spanish_Regions_2000_2019.csv") #Import Spanish Provinces Data
 names(GDPpc_spain)[1]<-paste("provincia") # Change Province to provincia
 
 head(GDPpc_spain, 1)
 ```
 
-The dataframe is cleaned for merging with one from mapSpain. This turned out being unnecessary because of the mapSpain package having many options for province names in its large dataframes.
+    ## # A tibble: 1 × 3
+    ##   provincia `2000` `2019`
+    ##   <chr>      <dbl>  <dbl>
+    ## 1 Almería    15186  21196
 
-```{r GDPpc_Spain, warning=FALSE, show_col_types=FALSE, warning=FALSE}
+The dataframe is cleaned for merging with one from mapSpain. This turned
+out being unnecessary because of the mapSpain package having many
+options for province names in its large dataframes.
+
+``` r
 census <- mapSpain::pobmun19
 
 census["provincia"][census["provincia"] == "Araba/Álava"] <- "Álava" # Change alava
@@ -75,7 +61,7 @@ Can <- esp_get_can_box() # Box in bottom left corner of map
 
 Four plots are made from the GDPPC data.
 
-```{r 2000_GDPpc, warning=FALSE}
+``` r
 Provinces_2000 <-
   ggplot(spain_gdp_sf) +
   geom_sf(aes(fill = x2000),
@@ -98,11 +84,15 @@ Provinces_2000 <-
   theme(legend.position = c(0.1, 0.6)) +
   ggtitle("Economic Production of Spanish Provinces in 2000", subtitle = "Inflation Adjusted (2019 Euros)")
 Provinces_2000
+```
 
+![](Spanish_GDPPC_Provinces_files/figure-gfm/2000_GDPpc-1.png)<!-- -->
+
+``` r
 #ggsave("GDPPC_2000.png", dpi = 800)
 ```
 
-```{r 2019_GDPpc, warning=FALSE}
+``` r
 Provinces_2019 <- 
   ggplot(spain_gdp_sf) +
   geom_sf(aes(fill = x2019),
@@ -126,11 +116,15 @@ Provinces_2019 <-
   theme(legend.position = c(0.1, 0.6)) +
   ggtitle("Economic Production of Spanish Provinces in 2019", subtitle = "Inflation Adjusted (2019 Euros)")
 Provinces_2019
+```
 
+![](Spanish_GDPPC_Provinces_files/figure-gfm/2019_GDPpc-1.png)<!-- -->
+
+``` r
 #ggsave("GDPPC_2019.png", dpi = 800)
 ```
 
-```{r 2000_2019_GDPpc_Absolute_Change, warning=FALSE}
+``` r
 spain_gdp_sf <- spain_gdp_sf %>% #Create Absolute and Percent Columns
   mutate(Absolute = x2019-x2000,
          Percent = (x2019-x2000)/x2000*100)
@@ -157,11 +151,15 @@ Provinces_Absolute_Change <-
   theme(legend.position = c(0.1, 0.6)) +
   ggtitle("Economic Growth of Spanish Provinces, 2000 to 2019, Absolute", subtitle = "Inflation Adjusted (2019 Euros)")
 Provinces_Absolute_Change
+```
 
+![](Spanish_GDPPC_Provinces_files/figure-gfm/2000_2019_GDPpc_Absolute_Change-1.png)<!-- -->
+
+``` r
 #ggsave("GDPPC_Absolute_Change.png", dpi = 800)
 ```
 
-```{r 2000_2019_GDPpc_Percent_Change, warning=FALSE}
+``` r
 Provinces_Percent_Change <-
   ggplot(spain_gdp_sf) +
   geom_sf(aes(fill = Percent),
@@ -184,13 +182,18 @@ Provinces_Percent_Change <-
   theme(legend.position = c(0.1, 0.6)) +
   ggtitle("Economic Growth of Spanish Provinces, 2000 to 2019, Relative")
 Provinces_Percent_Change
+```
 
+![](Spanish_GDPPC_Provinces_files/figure-gfm/2000_2019_GDPpc_Percent_Change-1.png)<!-- -->
+
+``` r
 #ggsave("GDPPC_Percent_Change.png", dpi = 800)
 ```
 
-An animation is made shocasing the absolute change in GDPPC for each province from 2000 to 2019.
+An animation is made shocasing the absolute change in GDPPC for each
+province from 2000 to 2019.
 
-```{r Animated_Transition_00_19, warning=FALSE}
+``` r
 long_spain_gdp_sf <- # Making a "Year" column where each province has 2000 and 2019
   spain_gdp_sf %>%
   pivot_longer(
@@ -229,64 +232,10 @@ animate(
   width = 1360, height = 840, res=300,
   renderer = gifski_renderer()
 )
-anim_save("Provinces_2000_2019_Transition.gif", animation = last_animation())
 ```
 
-```{r Testing, echo=FALSE}
-# Spain <- GENERATES A GREY MAP OF SPAIN WITH SURROUNDING COUNTRIES
-# leaflet() %>%
-# setView(
-# lat = 39.6566,
-# lng = -3.7038400,
-# zoom = 5.5
-# ) %>%
-# addProviderEspTiles(provider = "IGNBase.Gris")
-# #addProviderEspTiles(provider = "RedTransporte.Carreteras")
-# Spain
+![](Spanish_GDPPC_Provinces_files/figure-gfm/Animated_Transition_00_19-1.gif)<!-- -->
 
-# census <- mapSpain::pobmun19
-# 
-# # Extract CCAA from base dataset
-# 
-# codelist <- mapSpain::esp_codelist
-# 
-# census <-
-#   unique(merge(census, codelist[, c("cpro", "codauto")], all.x = TRUE))
-# census
-# 
-# # Summarize by CCAA
-# census_ccaa <-
-#   aggregate(cbind(pob19, men, women) ~ codauto, data = census, sum)
-# 
-# census_ccaa$porc_women <- census_ccaa$women / census_ccaa$pob19
-# census_ccaa$porc_women_lab <-
-#   paste0(round(100 * census_ccaa$porc_women, 2), "%")
-# census_ccaa
-# 
-# # Merge into spatial data
-# 
-# CCAA_sf <- esp_get_ccaa()
-# CCAA_sf <- merge(CCAA_sf, census_ccaa)
-# Can <- esp_get_can_box()
-# 
-# ggplot(CCAA_sf) +
-#   geom_sf(aes(fill = porc_women),
-#     color = "grey70",
-#     lwd = .3
-#   ) +
-#   geom_sf(data = Can, color = "grey70") +
-#   geom_sf_label(aes(label = porc_women_lab),
-#     fill = "white", alpha = 0.5,
-#     size = 3,
-#     label.size = 0
-#   ) +
-#   scale_fill_gradientn(
-#     colors = hcl.colors(10, "Blues", rev = TRUE),
-#     n.breaks = 10,
-#     labels = function(x) {
-#       sprintf("%1.1f%%", 100 * x)
-#     },
-#     guide = guide_legend(title = "Porc. women")
-#   ) +
-#   theme_void() +
-#   theme(legend.position = c(0.1, 0.6))
+``` r
+anim_save("Provinces_2000_2019_Transition.gif", animation = last_animation())
+```
